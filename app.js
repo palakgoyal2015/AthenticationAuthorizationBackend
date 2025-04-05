@@ -45,7 +45,7 @@ app.get("/login",(req,res)=>{
 app.get("/profile",isLoggedIn,async(req,res)=>{
   let user=await userModel.findOne({email:req.userCreated.email})
   console.log(user)
-    res.render('profile')
+    res.render('profile',{user})
     
 })
 app.post("/login/create",async(req,res)=>{
