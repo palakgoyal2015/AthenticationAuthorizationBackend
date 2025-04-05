@@ -7,8 +7,8 @@ const userSchema=mongoose.Schema({
     age:Number,
     email:String,
     password:String,
-    post:[{
-        type:mongoose.Schema.Types.ObjectId,ref:"post"
+    posts:[{
+        type:mongoose.Schema.Types.ObjectId,ref:"posts"
     }]
 })
 module.exports=mongoose.model("user",userSchema)

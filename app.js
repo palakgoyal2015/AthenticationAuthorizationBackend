@@ -43,11 +43,27 @@ app.get("/login",(req,res)=>{
     res.render("login")
 })
 app.get("/profile",isLoggedIn,async(req,res)=>{
-  let user=await userModel.findOne({email:req.userCreated.email})
+  let user=await userModel.findOne({email:req.userCreated.email}).populate("posts")
   console.log(user)
     res.render('profile',{user})
     
 })
+
+app.post("/post",isLoggedIn,async(req,res)=>{
+ let user=await userModel.findOne({email:req.userCreated.email})
+ let {content}=req.body
+ let post=await postModel.create({
+    user:user._id,
+    content
+ })
+
+ user.posts.push(post._id)
+ await user.save()
+ res.redirect("/profile")
+})
+
+
+
 app.post("/login/create",async(req,res)=>{
     let {email,password}=req.body
 
@@ -63,6 +79,9 @@ if(result){
 }
 })
 })
+
+
+
 app.get("/logout",async(req,res)=>{
     res.cookie("token","");
     res.render("login")

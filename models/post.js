@@ -14,3 +14,4 @@ const postSchema=mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,ref:"user"
     }]
 })
+module.exports=mongoose.model('posts',postSchema)
